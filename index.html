@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>ADX Tattoo — demo</title>
+
+  <!-- Шрифт -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- PRELOADER -->
+  <div id="preloader" aria-hidden="true">
+    <div class="pre-inner">
+      <h1 class="logo">ADX TATTOO</h1>
+      <p class="tagline">Минск&nbsp;•&nbsp;Аэродромная&nbsp;18</p>
+
+      <!-- Прямая полоса прогресса -->
+      <div class="pre-progress">
+        <div class="pre-bar"><span class="pre-fill" style="width:0%"></span></div>
+        <div class="pre-percent" id="pre-percent">0%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <header class="hero">
+    <video class="hero-video" src="assets/hero.mp4" autoplay muted loop playsinline preload="auto"></video>
+  </header>
+
+  <div class="hero-spacer" aria-hidden="true"></div>
+
+  <!-- Секции -->
+  <main class="scroll-panels">
+    <section class="panel" data-src="assets/img/work-01.jpg">
+      <h2 class="headline-artists">OUR ARTISTS</h2>
+      <p>Мастера / Запись / Портфолио</p>
+    </section>
+
+    <section class="panel" data-src="assets/img/work-02.jpg">
+      <h2>NEO-TRADITIONAL</h2>
+      <p>цвет / сюжет / детализация</p>
+    </section>
+
+    <section class="panel" data-src="assets/img/work-03.jpg">
+      <h2>FINE-LINE MINIMAL</h2>
+      <p>тонкие линии / micro-tattoo</p>
+    </section>
+  </main>
+
+  <!-- libs -->
+  <script src="gsap.min.js" defer></script>
+  <script src="ScrollTrigger.min.js" defer></script>
+
+  <!-- Pixi -->
+  <script src="libs/pixi.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@pixi/filter-displacement@6/dist/filter-displacement.min.js" defer></script>
+
+  <!-- наши -->
+  <script src="decode-preloader.js" defer></script>
+  <script src="reveal-displacement.js" defer></script>
+  <script src="artists-wave.js" defer></script>
+
+  <!-- Сброс фейдера при возврате по истории / bfcache -->
+  <script>
+    window.addEventListener('pageshow', function (e) {
+      // Сбрасываем фуллскрин-фейдер, если вдруг остался чёрным
+      const fader = document.getElementById('route-fader');
+      if (fader) { fader.style.opacity = '0'; }
+      // Если вернулись из artists — прелоадер не нужен
+      if (e.persisted || sessionStorage.getItem('adxSkipPreloader') === '1') {
+        const pre = document.getElementById('preloader');
+        if (pre) pre.classList.add('hide');
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+/* RESET */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:'IBM Plex Mono',monospace;
+  background:#111;color:#fff;overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+/* Лочим скролл, пока виден прелоадер */
+body.preloading{overflow:hidden;height:100vh}
+
+/* CANVAS */
+#reveal-stage{
+  position:fixed;inset:0;z-index:2;
+  pointer-events:none;opacity:1;
+}
+
+/* PRELOADER */
+#preloader{
+  position:fixed;inset:0;z-index:9999;background:#000;
+  display:flex;align-items:center;justify-content:center;
+  will-change:opacity,filter,transform;
+}
+.pre-inner{text-align:center}
+
+/* ЛОГО */
+.logo{
+  position:relative;display:inline-block;
+  white-space:pre;
+  font-size:clamp(2.8rem,9vw,8rem);
+  letter-spacing:.05em;text-transform:uppercase;
+}
+
+/* слоган */
+.tagline{margin-top:.6rem;font-size:clamp(1.1rem,3vw,1.9rem);opacity:.9}
+
+/* Прогресс */
+.pre-progress{margin-top:1.2rem;display:flex;flex-direction:column;gap:.45rem;align-items:center}
+.pre-bar{width:min(56vw,520px);height:3px;background:#222;border-radius:999px;overflow:hidden}
+.pre-fill{display:block;height:100%;background:#fff;transform-origin:left center;transition:width .25s ease}
+.pre-percent{font-size:.9rem;opacity:.6;letter-spacing:.08em}
+
+/* Выход прелоадера */
+#preloader.blur{animation:preBlurOut .9s forwards}
+#preloader.hide{opacity:0;pointer-events:none}
+@keyframes preBlurOut{
+  to{filter:blur(28px) opacity(0) contrast(1.2);transform:scale(1.05)}
+}
+
+/* HERO — фикс слой под канвасом */
+.hero{position:fixed;inset:0;z-index:1;overflow:hidden}
+.hero-video{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  filter:brightness(.65) saturate(1.15);pointer-events:none
+}
+
+/* Спейсер */
+.hero-spacer{height:100vh}
+
+/* Секции — над канвасом */
+.scroll-panels{position:relative;z-index:3}
+.panel{
+  position:relative;min-height:100vh;
+  padding:13rem 4vw 6rem;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;background:transparent;
+}
+
+/* Заголовки секций */
+.panel h2{
+  font-size:clamp(3.4rem,8.4vw,9.6rem);
+  line-height:1;text-transform:uppercase;mix-blend-mode:difference;
+  pointer-events:auto; cursor:pointer;
+}
+
+/* Буквы (используются в интро и в кликовой волне) */
+.headline span.ch,.headline-artists span.ch{
+  display:inline-block;white-space:pre;will-change:transform,filter,color;
+}
+
+/* Глитч-стейт */
+.logo .ch.glitch,.headline .ch.glitch,.headline-artists .ch.glitch{
+  color:#ff3366;
+  text-shadow:0 0 6px rgba(255,51,102,.8);
+  transform:scale(1.05);
+  filter:blur(1px);
+  transition:all .15s ease;
+}
+
+/* Импакт при клике */
+.headline-impact{transition:filter .18s ease;filter:contrast(1.08) saturate(1.06)}
+
+/* Подпись под заголовком */
+.panel p{opacity:.9;margin-top:1rem}
+
+/* Лёгкое зерно у секций */
+.panel::after{
+  content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background-image:radial-gradient(rgba(255,255,255,.05) 1px, transparent 1px);
+  background-size:3px 3px;opacity:.15;mix-blend-mode:overlay
+}
+
+/* Фулскрин-фейдер (если понадобится для роутинга) */
+#route-fader{position:fixed;inset:0;z-index:9998;background:#000;pointer-events:none;opacity:0}
+
+/* Адаптация для сверхузких телефонов */
+@media (max-width: 480px){
+  .panel h2{font-size:clamp(2.6rem,10.5vw,6.2rem);letter-spacing:0.015em}
+}
+@media (max-width: 360px){
+  .panel h2{font-size:clamp(2.4rem,11vw,5.6rem);letter-spacing:0.01em}
+}

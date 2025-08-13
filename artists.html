@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>ADX Tattoo — Our Artists</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .artists-wrap{
+      min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+      padding:6rem 4vw; text-align:center; gap:1.2rem;
+      background:#0d0d0d;
+    }
+    .artists-wrap h1{ font-size:clamp(2.6rem,6.5vw,6rem); text-transform:uppercase; white-space:nowrap; }
+    .artists-wrap p{ opacity:.8; }
+    .artists-actions{ display:flex; gap:1rem; margin-top:1.2rem; flex-wrap:wrap; justify-content:center; }
+    .btn{
+      border:1px solid rgba(255,255,255,.25); padding:.75rem 1.1rem; border-radius:999px;
+      text-decoration:none; color:#fff; cursor:pointer;
+    }
+    .btn:hover{ border-color:#fff; }
+  </style>
+</head>
+<body>
+  <main class="artists-wrap">
+    <h1>OUR ARTISTS</h1>
+    <p>Здесь скоро будет раздел с мастерами, портфолио и онлайн-запись.</p>
+    <div class="artists-actions">
+      <a class="btn" href="#" id="back-home">На главную</a>
+    </div>
+  </main>
+
+  <script>
+    // Возврат на главную БЕЗ повторного прелоадера и с сохранением позиции
+    document.getElementById('back-home').addEventListener('click', function(e){
+      e.preventDefault();
+      sessionStorage.setItem('adxSkipPreloader', '1'); // попросим главную не показывать прелоадер
+
+      // Если есть история и пришли именно с главной — возвращаемся назад (сохранит позицию)
+      const cameFromIndex = document.referrer && /index\.html|\/$/.test(document.referrer);
+      if (history.length > 1 && cameFromIndex){
+        history.back();
+      } else {
+        // Фолбэк: прямой переход на index без прелоадера
+        window.location.href = 'index.html';
+      }
+    });
+
+    // Сбрасываем возможный чёрный фейдер, если вернулись сюда из истории
+    window.addEventListener('pageshow', function(){
+      const f = document.getElementById('route-fader');
+      if (f) f.style.opacity = '0';
+    });
+  </script>
+</body>
+</html>
